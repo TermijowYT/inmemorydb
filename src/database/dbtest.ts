@@ -2,28 +2,36 @@ import { InMemoryDB } from './inmemorydb.ts';
 import { faker } from '@faker-js/faker';
 
 // Crear una instancia de la base de datos
-export const db = new InMemoryDB<string>;
+export const db = new InMemoryDB<string>();
 
-
-for (let i = 0; i < 2; i++) {
+const fullvalues = [];
+let table = {};
+for (let i = 0; i < 10; i++) {
     const id = faker.string.uuid();
-    const data = (faker.internet.userName()).toString();
+    const data = (faker.internet.userName());
     db.insert(id, data);
-    const fullvalues = db.getAllIds(id);
-    console.table(fullvalues);
+        table = {
+            ...table,
+            id:id,
+            data:data
+        }
+    fullvalues.push(id);
 }
+// const fullvalues = db.getAllIds(id);
+
+
 // Insertar valores en la base de datos
-db.insert('key1', 'Pepepepepe');
-// db.insert('key2', 456);
+db.insert('key1', 'pepe');
 
 // Obtener un valor de la base de datos
 export const value = db.get('key1');
-console.log(value); // Salida: 123
+// console.log(value);
 
 // Obtener todos los valores de la base de datos
 export const allValues = db.getAll();
-console.table(allValues); // Salida: [123, 456]
-
+// console.table([...fullvalues, ...allValues]);
+console.table([allValues, fullvalues]); 
+console.table(table);
 // Eliminar un valor de la base de datos
 db.delete('key1');
 
@@ -31,10 +39,9 @@ db.delete('key1');
 db.clear();
 
 
+// console.table(fullvalues);
 
-
-
-
+// console.table(c)
 
 
 
